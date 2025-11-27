@@ -2,8 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKER_USER = credentials('docker_user')
-        DOCKER_PASS = credentials('docker_pass')
+       DOCKER_CREDENTIALS = credentials('dockerhub')
     }
 
     stages {
@@ -22,8 +21,8 @@ pipeline {
         stage('Push Docker Image') {
             steps {
                 sh '''
-                echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
-                docker push ayyandar/devops-app:latest
+                    echo $DOCKER_CREDENTIALS_PSW | docker login -u $DOCKER_CREDENTIALS_USR --password-stdin
+                    docker push ayyandar/devops-app:latest
                 '''
             }
         }
