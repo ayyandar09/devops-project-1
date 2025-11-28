@@ -28,16 +28,13 @@ pipeline {
         }
 
         stage('Deploy to Minikube') {
-            steps {
-                withCredentials([file(credentialsId: 'kubeconfig', variable: 'KCFG')]) {
-                    sh '''
-                    export KUBECONFIG=$KCFG
-                    kubectl apply -f k8s/deployment.yaml
-                    kubectl apply -f k8s/service.yaml
-                    '''
-                }
-            }
-        }
-        
+    steps {
+        sh '''
+        # Use minikube’s built-in kubectl wrapper
+        minikube kubectl -- apply -f k8s/
+        '''
+    }
+}
+
     }
 }
