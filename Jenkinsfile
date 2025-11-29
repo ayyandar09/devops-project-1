@@ -30,11 +30,14 @@ pipeline {
         stage('Deploy to Minikube') {
     steps {
         sh '''
-        # Use minikube’s built-in kubectl wrapper
-        minikube kubectl -- apply -f k8s/
-        '''
-    }
-}
+            export MINIKUBE_HOME=/home/ayyandar
+            minikube update-context
+            minikube kubectl -- apply -f k8s/deployment.yaml
+            minikube kubectl -- apply -f k8s/service.yaml
+            minikube kubectl -- get pods -A
+             '''
+            }
+        }
 
     }
 }
