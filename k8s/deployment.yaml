@@ -15,5 +15,7 @@ spec:
       containers:
       - name: devops-app
         image: ayyandar/devops-app:latest
+        imagePullSecrets:
+          - name: regcred
         ports:
-        - containerPort: 5000
+          - containerPort: 5000
